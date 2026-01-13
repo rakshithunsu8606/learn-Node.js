@@ -3,29 +3,18 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.json())
+app.use(express.static('public'))
+
+const routes=require("./routes/api/v1/index.js");
+const ConnectionMongoDB = require('./db/MongoDB.js');
+
+ConnectionMongoDB();
+
 console.log(process.env.PORT)
 
-app.get('/Category/getCategory', (req, res) => {
-    res.status(200).json({id:101,name:'abc'})
-})
-
-app.post('/Category/addCategory', (req, res) => {
-    res.status(200).json({method:'Category added Sucessfully'})
-    console.log(req.body);
-    
-})
-
-app.put('/Category/updateCategory/:id', (req, res) => {
-    const id=req.params.id
-
-    res.status(200).json({method:'Category update Sucessfully'})
-})
-
-app.delete('/Category/deleteCategory/:id', (req, res) => {
-    const id=req.params.id
-
-    res.status(200).json({method:'Category delete Sucessfully'})
-})
+//http://localhost:8080/api/v1
+app.use('/api/v1',routes)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server Started At ${process.env.PORT}`);
