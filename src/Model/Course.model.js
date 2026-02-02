@@ -3,7 +3,8 @@ const { default: mongoose } = require("mongoose");
 const CoursiesSchema = new mongoose.Schema(
     {
         category_id:{
-            type:mongoose.Types.ObjectId
+            type:mongoose.Types.ObjectId,
+            ref:'categories'
         },
         name: {
             type: String,

@@ -1,35 +1,24 @@
 const express = require("express")
 const { CategoriesController } = require("../../../Controller")
+const upload = require("../../../middleware/upload")
 
 const router = express.Router()
 
 
-router.get('/getAllCategory', (req, res) => {
-    res.status(200).json({ method: 'AllCategory get Sucessfully' })
-})
+router.get('/getAllCategory', CategoriesController.getAllCategory)
 
 //http://localhost:8080/api/v1/category/getCategory
-router.get('/getCategory', (req, res) => {
-    res.status(200).json({ id: 101, name: 'abc' })
-})
+router.get('/getCategory/:id',CategoriesController.getCategory)
 
-router.post('/addCategory', CategoriesController.addCategory)
+router.get('/activeCategory',CategoriesController.activeCategory)
 
-router.put('/updateCategory/:id', (req, res) => {
-    const id = req.params.id
 
-    res.status(200).json({ method: 'Category update Sucessfully' })
+router.post('/addCategory',upload.single('category_img'), CategoriesController.addCategory)
 
-    console.log(req.body);
-})
+router.put('/updateCategory/:id',upload.single('category_img'), CategoriesController.updateCategory)
 
-router.delete('/deleteCategory/:id', (req, res) => {
-    console.log(req.params.id);
-    
-
-    // console.log(req.query);
-
-    res.status(200).json({ method: 'Category delete Sucessfully' })
-})
+router.delete('/deleteCategory/:id', CategoriesController.deleteCategory)
 
 module.exports = router
+
+
