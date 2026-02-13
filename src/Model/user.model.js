@@ -10,26 +10,35 @@ const UserSchema = new mongoose.Schema(
         email: {
             type: String,
             unique: true,
-            required: true
+            // required: true
+        },
+        googleId: {
+            type: String
+        },
+        facebookId: {
+            type: String
         },
         password: {
-            type: String,
-            required: true,
+            type: String
         },
         role: {
             type: String,
             default: 'user'
         },
+        mobile_no: {
+            type: String
+        },
         OTP: {
             type: Number
         },
         dob: {
-            type: String,
-            required: true
+            type: String
         },
         gender: {
-            type: String,
-            required: true
+            type: String
+        },
+        refreshToken: {
+            type: String
         },
         isVerify: {
             type: Boolean,

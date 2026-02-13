@@ -34,7 +34,7 @@ const getCategory = async (req, res) => {
 
 const addCategory = async (req, res) => {
     try {
-        console.log(req.file);
+        console.log("addCategory:",req.body,req.file,req.user);
 
         const category = await Category.create({ ...req.body, category_img: req.file.path })
 
@@ -47,6 +47,8 @@ const addCategory = async (req, res) => {
 
         return res.status(200).json({ data: category, meassage: "Category added Sucessfully" })
     } catch (error) {
+        console.log(error);
+        
         return res.status(400).json({ data: null, meassage: "Incress Not define Category" + error.meassage })
     }
 }
