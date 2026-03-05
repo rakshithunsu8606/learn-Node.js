@@ -39,5 +39,4 @@ app.use('/api/v1', routes)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server Started At ${process.env.PORT}`);
-
 })

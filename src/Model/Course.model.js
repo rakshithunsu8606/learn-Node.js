@@ -28,7 +28,7 @@ const CoursiesSchema = new mongoose.Schema(
         },
         gst_number:{
             type:String,
-            upercase:true,
+            uppercase:true,
         },
         is_active: {
             type: Boolean,

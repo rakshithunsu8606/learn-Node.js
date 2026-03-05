@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-// const sendMail = require("../../server/nodemailer");
+const sendMail = require("../../server/nodemailer");
 const User = require("../Model/user.model");
 const bcrypt = require('bcrypt');
 const sendSMS = require('../../server/twilo');
@@ -36,7 +36,7 @@ const genrateToken = async (_id) => {
 const Registration = async (req, res) => {
 
     try {
-        const { email, password,mobile_no } = req.body;
+        const { email, password, mobile_no } = req.body;
 
         console.log(email, password);
 
@@ -60,9 +60,9 @@ const Registration = async (req, res) => {
 
         const user = await User.create({ ...req.body, password: SecretPass, OTP })
 
-        // sendMail(email, 'Registr OTP', 'Your OTP:' + OTP)
+        sendMail(email, 'Registr OTP', 'Your OTP:' + OTP)
 
-        sendSMS(mobile_no,OTP)
+        // sendSMS(mobile_no,OTP)
 
         const userData = await User.findOne({ email }).select('-password,-OTP');
 
@@ -94,6 +94,100 @@ const Registration = async (req, res) => {
 
 
 }
+
+const ResetPass = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        console.log(email, password);
+
+
+        const userExi = await User.findOne({ email });
+
+        console.log(userExi);
+
+
+        if (!userExi) {
+            return res.status(400).json({
+                sucess: false,
+                data: [],
+                message: "User Not Exists"
+            })
+        }
+
+        const SecretPass = await bcrypt.hash(password, 10)
+        
+
+        console.log(SecretPass);
+
+        userExi.password = SecretPass;
+
+        await userExi.save()
+
+        return res.status(200).json({
+            sucess: true,
+            data: userExi,
+            meassage: "ResetPass Sucessfully"
+        })
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            sucess: false,
+            data: [],
+            message: error.meassage
+        })
+    }
+
+}
+
+const ForgotePass = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        console.log(email);
+
+
+        const userExi = await User.findOne({ email });
+
+        console.log("userExiiiiiiii:", userExi);
+
+
+        if (!userExi) {
+            return res.status(400).json({
+                sucess: false,
+                data: [],
+                message: "User Not Exists"
+            })
+        }
+
+        const OTP = Math.floor(1000 + Math.random() * 9000).toString()
+
+        sendMail(email, 'Forgote OTP', 'Your OTP:' + OTP)
+
+        userExi.OTP = OTP
+
+        await userExi.save();
+
+        return res.status(200).json({
+            sucess: true,
+            data: userExi,
+            meassage: "Forgote OTP Sucessfully"
+        })
+
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            sucess: false,
+            data: [],
+            message: error.meassage
+        })
+    }
+
+}
+
+
 
 const Login = async (req, res) => {
     try {
@@ -185,7 +279,7 @@ const VerifyUser = async (req, res) => {
 
         const userVerify = await User.findOne({ email, OTP });
 
-        console.log("userExists:", userVerify);
+        console.log("userExistssss:", userVerify);
 
 
         if (!userVerify) {
@@ -251,14 +345,14 @@ const GentarateNewToken = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            maxAge: 15 * 60 * 1000
+            maxAge: 60 * 60 * 1000
         }
 
         const refOpt = {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            maxAge: 15 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000
         }
 
         return res
@@ -302,7 +396,7 @@ const logOut = async (req, res) => {
         if (!user) {
             return res.status(400).json({
                 sucess: false,
-                data: [],
+                data: null,
                 message: "User Is Not logOut"
             })
         }
@@ -313,7 +407,7 @@ const logOut = async (req, res) => {
             .status(200)
             .json({
                 sucess: true,
-                data: user,
+                data: null,
                 meassage: "User Success logOut"
             })
 
@@ -335,10 +429,10 @@ const cheakAuth = async (req, res) => {
         const token = req.cookies.accessToken || req.header("Authorization")?.replace("Beare ", "")
 
         if (!token) {
-            return res.status(400).json({
+            return res.status(401).json({
                 sucess: false,
                 data: [],
-                message: "Token not found"
+                message: "User Logout."
             })
         }
 
@@ -388,5 +482,7 @@ module.exports = {
     GentarateNewToken,
     logOut,
     cheakAuth,
-    genrateToken
+    genrateToken,
+    ForgotePass,
+    ResetPass
 }

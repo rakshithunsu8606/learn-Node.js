@@ -1,10 +1,11 @@
+// const { default: mongoose } = require("mongoose");
+
 const { default: mongoose } = require("mongoose");
 
 const CategoriesSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            unique: true,
             trim: true
         },
         description: {

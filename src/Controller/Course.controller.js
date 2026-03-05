@@ -11,7 +11,7 @@ const getAllCourse = async (req, res) => {
 
         return res.status(200).json({ data: courseAll, meassage: "Allcourse added Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not define Allcourse" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define Allcourse" + error.meassage })
     }
 }
 
@@ -27,15 +27,19 @@ const getCourse = async (req, res) => {
 
         return res.status(200).json({ data: course, meassage: "getCourse added Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not define getCourse" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define getCourse" + error.meassage })
     }
 }
 
 const addCourse = async (req, res) => {
     try {
-        console.log(req.body);
+        console.log("req.body", req.body);
+        console.log("req.file", req.file)
 
         const course = await Course.create({ ...req.body, course_img: req.file.path })
+
+        // const course = await Course.create(req.body)
+
 
         if (!course) {
             return res.status(400).json({ data: null, meassage: "Course Not added" })
@@ -43,12 +47,52 @@ const addCourse = async (req, res) => {
 
         return res.status(200).json({ data: course, meassage: "Course added Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not define Course" + error.message })
+        return res.status(500).json({ data: null, meassage: "Incress Not define Course" + error.message })
     }
 }
 
-const updateCourse = (req, res) => {
+const updateCourse = async (req, res) => {
+    try {
 
+        let updateData = { ...req.body }
+        
+        const categoryData = await Course.findById(req.params.id)
+
+        console.log("req.file", req.file);
+        console.log("categoryData", categoryData);
+
+        
+
+        if (req.file) {
+            fs.unlink(categoryData.course_img, (error) => {
+                console.log("Image Not Delete And update", error);
+            })
+
+            updateData.course_img = req.file.path
+        }
+
+        
+
+        console.log("updateData",updateData);
+        
+
+        const course = await Course.findByIdAndUpdate(
+            req.params.id,
+            updateData,
+            { new: true, runValidators: true }
+        )
+
+        console.log(course);
+        
+
+        if (!course) {
+            return res.status(400).json({ data: null, meassage: "Course Not update" })
+        }
+
+        return res.status(200).json({ data: course, meassage: "Course update Sucessfully" })
+    } catch (error) {
+        return res.status(500).json({ data: null, meassage: "Incress Not update Course" + error.meassage })
+    }
 }
 
 const deleteCourse = async (req, res) => {
@@ -57,25 +101,26 @@ const deleteCourse = async (req, res) => {
 
         const course = await Course.findByIdAndDelete(req.params.id)
 
-        console.log(course,course.course_img);
-        
+        console.log(course, course.course_img);
+
 
         // const path = course + './public/images/course_img/'
 
-        fs.unlink(course.course_img, (err) => {                        
+        fs.unlink(course.course_img, (err) => {
             if (err) {
                 console.log(err);
             } else {
                 console.log("Delete Sucessfully");
             }
         })
+
         if (!course) {
             return res.status(400).json({ data: null, meassage: "Course Not delete" })
         }
 
         return res.status(200).json({ data: course, meassage: "Course delete Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not delete Course" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not delete Course" + error.meassage })
     }
 }
 

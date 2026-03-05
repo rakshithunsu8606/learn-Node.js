@@ -1,6 +1,7 @@
 const Category = require("../Model/Category.model")
 const fs = require("fs")
 
+console.log("hello");
 
 const getAllCategory = async (req, res) => {
     try {
@@ -12,7 +13,7 @@ const getAllCategory = async (req, res) => {
 
         return res.status(200).json({ data: CategoryAll, meassage: "AllCategory added Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not define AllCategory" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define AllCategory" + error.meassage })
     }
 }
 
@@ -28,7 +29,7 @@ const getCategory = async (req, res) => {
 
         return res.status(200).json({ data: category, meassage: "getCategory added Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not define getCategory" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define getCategory" + error.meassage })
     }
 }
 
@@ -49,7 +50,7 @@ const addCategory = async (req, res) => {
     } catch (error) {
         console.log(error);
         
-        return res.status(400).json({ data: null, meassage: "Incress Not define Category" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define Category" + error.meassage })
     }
 }
 
@@ -84,7 +85,7 @@ const updateCategory = async (req, res) => {
 
         return res.status(200).json({ data: category, meassage: "Category update Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not update Category" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not update Category" + error.meassage })
     }
 }
 
@@ -104,7 +105,7 @@ const deleteCategory = async (req, res) => {
 
         return res.status(200).json({ data: category, meassage: "Category delete Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not delete Category" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not delete Category" + error.meassage })
     }
 }
 
@@ -128,7 +129,7 @@ const activeCategory = async (req, res) => {
 
         return res.status(200).json({ data: categories, meassage: "activeCategory added Sucessfully" })
     } catch (error) {
-        return res.status(400).json({ data: null, meassage: "Incress Not define activeCategory" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define activeCategory" + error.meassage })
     }
 }
 

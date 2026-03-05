@@ -8,6 +8,8 @@ const storage = multer.diskStorage({
 
         const filepath = path.join("public", "images", file.fieldname)
 
+        console.log(filepath);
+        
         fs.mkdir(filepath, { recursive: true }, (err) => {
             console.log(err);
 
@@ -21,6 +23,9 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
+
+// console.log("upload",upload);
+
 
 module.exports = upload
 

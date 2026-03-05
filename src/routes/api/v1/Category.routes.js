@@ -14,7 +14,7 @@ router.get('/getCategory/:id',CategoriesController.getCategory)
 router.get('/activeCategory', CategoriesController.activeCategory)
 
 
-router.post('/addCategory',upload.single('category_img'),Auth(["admin","employe","instructure","user"]) , CategoriesController.addCategory)
+router.post('/addCategory',upload.single('category_img') , CategoriesController.addCategory)
 
 router.put('/updateCategory/:id',upload.single('category_img'), CategoriesController.updateCategory)
 
