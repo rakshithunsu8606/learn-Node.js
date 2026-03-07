@@ -55,13 +55,13 @@ const updateCourse = async (req, res) => {
     try {
 
         let updateData = { ...req.body }
-        
+
         const categoryData = await Course.findById(req.params.id)
 
         console.log("req.file", req.file);
         console.log("categoryData", categoryData);
 
-        
+
 
         if (req.file) {
             fs.unlink(categoryData.course_img, (error) => {
@@ -71,10 +71,10 @@ const updateCourse = async (req, res) => {
             updateData.course_img = req.file.path
         }
 
-        
 
-        console.log("updateData",updateData);
-        
+
+        console.log("updateData", updateData);
+
 
         const course = await Course.findByIdAndUpdate(
             req.params.id,
@@ -83,7 +83,7 @@ const updateCourse = async (req, res) => {
         )
 
         console.log(course);
-        
+
 
         if (!course) {
             return res.status(400).json({ data: null, meassage: "Course Not update" })
@@ -124,10 +124,38 @@ const deleteCourse = async (req, res) => {
     }
 }
 
+const activeCourse = async (req, res) => {
+    try {
+
+        let updateData = { ...req.body }
+
+        console.log("updateData", updateData);
+
+
+        const course = await Course.findByIdAndUpdate(
+            req.params.id,
+            updateData,
+            { new: true, runValidators: true }
+        )
+
+        console.log(course);
+
+
+        if (!course) {
+            return res.status(400).json({ data: null, meassage: "active Not update" })
+        }
+
+        return res.status(200).json({ data: course, meassage: "active update Sucessfully" })
+    } catch (error) {
+        return res.status(500).json({ data: null, meassage: "Incress Not update Course" + error.meassage })
+    }
+}
+
 module.exports = {
     getAllCourse,
     getCourse,
     addCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    activeCourse
 }
