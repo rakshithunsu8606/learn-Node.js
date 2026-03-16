@@ -129,7 +129,7 @@ const activeCourse = async (req, res) => {
 
         let updateData = { ...req.body }
 
-        console.log("updateData", updateData);
+        console.log("ActiveupdateData", updateData);
 
 
         const course = await Course.findByIdAndUpdate(
@@ -138,16 +138,16 @@ const activeCourse = async (req, res) => {
             { new: true, runValidators: true }
         )
 
-        console.log(course);
+        console.log("ActiveCourse",course);
 
 
         if (!course) {
-            return res.status(400).json({ data: null, meassage: "active Not update" })
+            return res.status(400).json({ data: null, meassage: "active Not active" })
         }
 
-        return res.status(200).json({ data: course, meassage: "active update Sucessfully" })
+        return res.status(200).json({ data: course, meassage: "active active Sucessfully" })
     } catch (error) {
-        return res.status(500).json({ data: null, meassage: "Incress Not update Course" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not active Course" + error.meassage })
     }
 }
 
