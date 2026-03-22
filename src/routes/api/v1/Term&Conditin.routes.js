@@ -1,37 +1,24 @@
 const express = require("express")
 
 const router = express.Router()
+const { TermsController } = require("../../../Controller")
 
 
-router.get('/getAllTerm_Condition', (req, res) => {
-    res.status(200).json({ method: 'AllTerm_Condition get Sucessfully' })
-})
 
-//http://localhost:8080/api/v1/category/getTerm_Condition
-router.get('/getTerm_Condition', (req, res) => {
-    res.status(200).json({ id: 101, name: 'abc' })
-})
+router.get('/getAllTerms', TermsController.getAllTerms)
 
-router.post('/addTerm_Condition', (req, res) => {
-    res.status(200).json({ method: 'Term_Condition added Sucessfully' })
+//http://localhost:8080/api/v1/category/getTerms
+router.get('/getTerms/:id', TermsController.getTerms)
+
+router.get('/activeTerms', TermsController.activeTerms)
 
 
-})
+router.post('/addTerms',TermsController.addTerms)
 
-router.put('/updateTerm_Condition/:id', (req, res) => {
-    const id = req.params.id
+router.put('/updateTerms/:id',TermsController.updateTerms)
 
-    res.status(200).json({ method: 'Term_Condition update Sucessfully' })
-
-    console.log(req.body);
-})
-
-router.delete('/deleteTerm_Condition/:id', (req, res) => {
-    // const id=req.params.id
-
-    console.log(req.query);
-
-    res.status(200).json({ method: 'Term_Condition delete Sucessfully' })
-})
+router.delete('/deleteTerms/:id', TermsController.deleteTerms)
 
 module.exports = router
+
+
