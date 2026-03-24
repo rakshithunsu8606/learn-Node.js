@@ -47,7 +47,7 @@ const addCategory = async (req, res) => {
 
         if (!category) {
             return res.status(400).json({ data: null, meassage: "Category Not added" })
-        }
+        } 
 
         return res.status(200).json({ data: category, meassage: "Category added Sucessfully" })
     } catch (error) {
