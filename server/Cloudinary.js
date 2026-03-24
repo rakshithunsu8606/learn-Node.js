@@ -19,6 +19,10 @@ const UpdateCloudinary = async (file, folder) => {
             .catch((error) => {
                 console.log(error);
             });
+
+
+
+        console.log("uploadResult:", uploadResult)
     } catch (error) {
         console.log(error);
     }
