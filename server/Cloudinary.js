@@ -13,6 +13,7 @@ const UpdateCloudinary = async (file, folder) => {
             .upload(
                 file, {
                 public_id: 'shoes',
+                folder: folder
             }
             )
             .catch((error) => {
