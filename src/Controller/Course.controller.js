@@ -5,6 +5,9 @@ const getAllCourse = async (req, res) => {
     try {
         const courseAll = await Course.find();
 
+        console.log(courseAll);
+        
+
         if (!courseAll) {
             return res.status(400).json({ data: null, meassage: "Allcourse Not added" })
         }
