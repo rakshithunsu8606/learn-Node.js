@@ -20,6 +20,11 @@ const UpdateCloudinary = async (file, folder) => {
                 console.log(error);
             });
 
+        return {
+            public_id: uploadResult.public_id,
+            url: uploadResult.url
+        }
+
 
 
         console.log("uploadResult:", uploadResult)

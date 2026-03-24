@@ -36,23 +36,23 @@ const getCategory = async (req, res) => {
 
 const addCategory = async (req, res) => {
     try {
-        console.log("addCategory:",req.body,req.file,req.user);
+        console.log("addCategory:", req.body, req.file, req.user);
 
-        await UpdateCloudinary(req.file.path,"Category")
+        const obj = await UpdateCloudinary(req.file.path, "Category")
 
-        const category = await Category.create({ ...req.body, category_img: req.file.path })
+        const category = await Category.create({ ...req.body, category_img: { public_id: obj.public_id, url: obj.url } })
 
         console.log("categoryData", category);
-        
+
 
         if (!category) {
             return res.status(400).json({ data: null, meassage: "Category Not added" })
-        } 
+        }
 
         return res.status(200).json({ data: category, meassage: "Category added Sucessfully" })
     } catch (error) {
         console.log(error);
-        
+
         return res.status(500).json({ data: null, meassage: "Incress Not define Category" + error.meassage })
     }
 }
@@ -125,7 +125,7 @@ const activeCategory = async (req, res) => {
             }
 
         ])
-        
+
         if (!categories) {
             return res.status(400).json({ data: null, meassage: "activeCategory Not added" })
         }
