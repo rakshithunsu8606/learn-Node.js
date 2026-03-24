@@ -1,3 +1,4 @@
+const { UpdateCloudinary } = require("../../server/Cloudinary");
 const Category = require("../Model/Category.model")
 const fs = require("fs")
 
@@ -36,6 +37,8 @@ const getCategory = async (req, res) => {
 const addCategory = async (req, res) => {
     try {
         console.log("addCategory:",req.body,req.file,req.user);
+
+        await UpdateCloudinary(req.file.path,"Category")
 
         const category = await Category.create({ ...req.body, category_img: req.file.path })
 
