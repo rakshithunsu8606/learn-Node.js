@@ -1,4 +1,4 @@
-const { UpdateCloudinary } = require("../../server/Cloudinary");
+const { UpdateCloudinary, DeleteCloudinary } = require("../../server/Cloudinary");
 const Category = require("../Model/Category.model")
 const fs = require("fs")
 
@@ -96,11 +96,11 @@ const deleteCategory = async (req, res) => {
     try {
         console.log(req.params.id);
 
-        // const cate = await Category.findById(req.params.id)
+        const cate = await Category.findById(req.params.id)
 
-        // const imgId = cate.category_img.public_id;
+        const imgId = cate.category_img.public_id;
 
-        // await cloudinary.uploader.destroy(imgId)
+        await DeleteCloudinary(imgId)
 
         const category = await Category.findByIdAndDelete(req.params.id)
 
