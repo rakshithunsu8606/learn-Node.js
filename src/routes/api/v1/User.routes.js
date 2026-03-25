@@ -57,7 +57,7 @@ router.get('/auth/google/callback',
             .cookie("accessToken", accessToken, accOpt)
             .cookie("refreshToken", refreshToken, refOpt)
             .status(200)
-            .redirect('http://localhost:5173')
+            .redirect('https://elevate-knowledge-eight.vercel.app')
     });
 
 router.get('/auth/facebook',
@@ -90,7 +90,7 @@ router.get('/auth/facebook/callback',
             .cookie("accessToken", accessToken, accOpt)
             .cookie("refreshToken", refreshToken, refOpt)
             .status(200)
-            .redirect('http://localhost:5173')
+            .redirect('https://elevate-knowledge-eight.vercel.app')
     });
 
 router.get('/createPDF', PDFMake)

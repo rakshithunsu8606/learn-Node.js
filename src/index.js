@@ -23,7 +23,7 @@ facebookProvider();
 createSocket();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://elevate-knowledge-eight.vercel.app',
   optionsSuccessStatus: 200,
   credentials: true
 }))
