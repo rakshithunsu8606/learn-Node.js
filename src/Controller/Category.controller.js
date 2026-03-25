@@ -69,11 +69,15 @@ const updateCategory = async (req, res) => {
         let updateData = { ...req.body }
 
         if (req.file) {
-            fs.unlink(categoryData.category_img, (error) => {
-                console.log("Image Not Delete And update", error);
-            })
+            // fs.unlink(categoryData.category_img, (error) => {
+            //     console.log("Image Not Delete And update", error);
+            // })
 
-            updateData.category_img = req.file.path
+            await DeleteCloudinary(categoryData?.category_img?.public_id)
+
+            const obj = await UpdateCloudinary(req.file.path, "Category")
+
+            updateData.category_img = { public_id: obj.public_id, url: obj.url }
         }
 
         const category = await Category.findByIdAndUpdate(
