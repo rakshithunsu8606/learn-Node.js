@@ -96,13 +96,9 @@ const deleteCategory = async (req, res) => {
     try {
         console.log(req.params.id);
 
-        const cate = await Category.findById(req.params.id)
-
-        const imgId = cate.category_img.public_id;  
-
-        await DeleteCloudinary(imgId)
-
         const category = await Category.findByIdAndDelete(req.params.id)
+
+        await DeleteCloudinary(category?.category_img?.public_id)
 
         console.log("categoryDelete:", category);
 
@@ -111,9 +107,9 @@ const deleteCategory = async (req, res) => {
             return res.status(400).json({ data: null, meassage: "Category Not delete" })
         }
 
-        fs.unlink(category.category_img, (err) => {
-            console.log(err);
-        })
+        // fs.unlink(category.category_img, (err) => {
+        //     console.log(err);
+        // })
 
         return res.status(200).json({ data: category, meassage: "Category delete Sucessfully" })
     } catch (error) {
