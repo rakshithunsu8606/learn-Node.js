@@ -33,8 +33,14 @@ const UpdateCloudinary = async (file, folder) => {
     }
 }
 
-const DeleteCloudinary = () => {
+const DeleteCloudinary = async (public_id) => {
+    console.log("public_id:",public_id);
+    
+    try {
+        const dele = await cloudinary.uploader.destroy()
+    } catch (error) {
 
+    }
 }
 
 
