@@ -12,7 +12,6 @@ const UpdateCloudinary = async (file, folder) => {
         const uploadResult = await cloudinary.uploader
             .upload(
                 file, {
-                public_id: 'shoes',
                 folder: folder
             }
             )
