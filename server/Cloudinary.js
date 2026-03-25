@@ -20,26 +20,30 @@ const UpdateCloudinary = async (file, folder) => {
                 console.log(error);
             });
 
+        console.log("uploadResult:", uploadResult)
+
         return {
             public_id: uploadResult.public_id,
             url: uploadResult.url
         }
 
-
-
-        console.log("uploadResult:", uploadResult)
     } catch (error) {
         console.log(error);
     }
 }
 
 const DeleteCloudinary = async (public_id) => {
-    console.log("public_id:",public_id);
-    
     try {
-        const dele = await cloudinary.uploader.destroy()
-    } catch (error) {
+        const result = await cloudinary.uploader.destroy(public_id, {
+            invalidate: true // clears CDN cache
+        });
 
+        console.log("Delete result:", result);
+
+        return result;
+    } catch (error) {
+        console.log("Delete error:", error);
+        throw error;
     }
 }
 
