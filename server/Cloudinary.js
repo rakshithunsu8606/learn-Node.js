@@ -12,7 +12,7 @@ const UpdateCloudinary = async (file, folder) => {
         const uploadResult = await cloudinary.uploader
             .upload(
                 file, {
-                folder: folder
+                folder: folder  
             }
             )
             .catch((error) => {
