@@ -19,7 +19,7 @@ const UpdateCloudinary = async (file, folder) => {
             .catch((error) => {
                 console.log(error);
             });
-   
+
         console.log("uploadResult:", uploadResult)
 
         return {
@@ -32,20 +32,18 @@ const UpdateCloudinary = async (file, folder) => {
     }
 }
 
-const DeleteCloudinary = async (public_id) => {
-    console.log("public_id",public_id);
-    
+const DeleteCloudinary = (public_id) => {
+    console.log("public_id", public_id);
+
     try {
-        const result = await cloudinary.uploader.destroy(public_id, {
-            invalidate: true 
+        const result = cloudinary.uploader.destroy(public_id, (err, result) => {
+            console.log("result:", result);
+            console.log("Error:", err + message);
         });
 
         console.log("Delete result:", result);
-
-        return result;
     } catch (error) {
-        console.log("Delete error:", error);
-        throw error;
+        console.log(error);
     }
 }
 
