@@ -104,6 +104,7 @@ const deleteCategory = async (req, res) => {
 
         const category = await Category.findByIdAndDelete(req.params.id)
 
+        console.log("categoryDelete:", category);
 
 
         if (!category) {
