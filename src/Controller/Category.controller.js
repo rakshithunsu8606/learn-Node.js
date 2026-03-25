@@ -98,7 +98,7 @@ const deleteCategory = async (req, res) => {
 
         const cate = await Category.findById(req.params.id)
 
-        const imgId = cate.category_img.public_id;
+        const imgId = cate.category_img.public_id;  
 
         await DeleteCloudinary(imgId)
 
