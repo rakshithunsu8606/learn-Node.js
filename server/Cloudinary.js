@@ -33,6 +33,8 @@ const UpdateCloudinary = async (file, folder) => {
 }
 
 const DeleteCloudinary = async (public_id) => {
+    console.log("public_id",public_id);
+    
     try {
         const result = await cloudinary.uploader.destroy(public_id, {
             invalidate: true // clears CDN cache
