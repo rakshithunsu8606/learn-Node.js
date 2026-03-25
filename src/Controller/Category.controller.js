@@ -96,12 +96,12 @@ const deleteCategory = async (req, res) => {
     try {
         console.log(req.params.id);
 
-        const cate = await Category.findById(req.params.id)
+        // const cate = await Category.findById(req.params.id)
 
-        const imgId = cate.category_img.public_id;
+        // const imgId = cate.category_img.public_id;
 
-        await cloudinary.uploader.destroy(imgId)
-        
+        // await cloudinary.uploader.destroy(imgId)
+
         const category = await Category.findByIdAndDelete(req.params.id)
 
 
