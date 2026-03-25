@@ -38,7 +38,7 @@ const DeleteCloudinary = (public_id) => {
     try {
         const result = cloudinary.uploader.destroy(public_id, (err, result) => {
             console.log("result:", result);
-            console.log("Error:", err + message);
+            console.log("Error:", err);
         });
 
         console.log("Delete result:", result);
