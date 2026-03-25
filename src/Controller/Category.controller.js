@@ -96,7 +96,15 @@ const deleteCategory = async (req, res) => {
     try {
         console.log(req.params.id);
 
+        const cate = await Category.findById(req.params.id)
+
+        const imgId = cate.category_img.public_id;
+
+        await cloudinary.uploader.destroy(imgId)
+        
         const category = await Category.findByIdAndDelete(req.params.id)
+
+
 
         if (!category) {
             return res.status(400).json({ data: null, meassage: "Category Not delete" })
