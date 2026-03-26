@@ -150,6 +150,6 @@ module.exports = {
     getCategory,
     addCategory,
     updateCategory,
-    deleteCategory,
+    deleteCategory,  
     activeCategory
 }
