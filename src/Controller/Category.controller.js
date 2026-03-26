@@ -66,7 +66,7 @@ const updateCategory = async (req, res) => {
         console.log("req.file", req.file);
         console.log("categoryData", categoryData);
 
-        let updateData = { ...req.body }
+        let updateData = { ...req.body, category_img: { public_id: categoryData.category_img.public_id, url: categoryData.category_img.url } }
 
         if (req.file) {
             // fs.unlink(categoryData.category_img, (error) => {
