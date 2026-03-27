@@ -40,7 +40,7 @@ app.use('/api/v1', routes)
 
 app.get('/', (req, res) => {
   res.send('Welcome The LMS Backend')
-})
+})   
 
 // app.listen(process.env.PORT, () => {
 //   console.log(`Server Started At ${process.env.PORT}`);
