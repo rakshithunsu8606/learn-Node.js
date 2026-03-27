@@ -6,16 +6,16 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log("multerfile", file);
 
-        // const filepath = path.join("public", "images", file.fieldname)
+        const filepath = path.join("public", "images", file.fieldname)
 
-        // console.log(filepath);
+        console.log(filepath);
         
-        // fs.mkdir(filepath, { recursive: true }, (err) => {
-        //     console.log(err);
+        fs.mkdir(filepath, { recursive: true }, (err) => {
+            console.log(err);
 
-        // })
-        // cb(null, filepath)
-        cb(null,'/tmp')
+        })
+        cb(null, filepath)
+        // cb(null,'/tmp')
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
