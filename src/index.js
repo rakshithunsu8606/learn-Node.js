@@ -24,7 +24,7 @@ createSocket();
 
 app.use(cors({
   origin: 'https://elevate-knowledge-eight.vercel.app',
-  // origin:'http://localhost:5173/',
+  // origin:'http://localhost:5173',
   optionsSuccessStatus: 200,
   credentials: true
 }))

@@ -1,4 +1,5 @@
-const Course = require("../Model/Course.model")
+const { UpdateCloudinary, DeleteCloudinary } = require("../../server/Cloudinary");
+const Course = require("../Model/Course.model");
 const fs = require("fs")
 
 const getAllCourse = async (req, res) => {
@@ -6,7 +7,7 @@ const getAllCourse = async (req, res) => {
         const courseAll = await Course.find();
 
         console.log(courseAll);
-        
+
 
         if (!courseAll) {
             return res.status(400).json({ data: null, meassage: "Allcourse Not added" })
@@ -39,9 +40,15 @@ const addCourse = async (req, res) => {
         console.log("req.body", req.body);
         console.log("req.file", req.file)
 
-        const course = await Course.create({ ...req.body, course_img: req.file.path })
+        const obj = await UpdateCloudinary(req.file.path, "Course")
+
+        // const course = await Course.create({ ...req.body, course_img: req.file.path })
 
         // const course = await Course.create(req.body)
+
+        const course = await Course.create({ ...req.body, course_img: { public_id: obj.public_id, url: obj.url } })
+
+        console.log("categoryData", course);
 
 
         if (!course) {
@@ -57,21 +64,24 @@ const addCourse = async (req, res) => {
 const updateCourse = async (req, res) => {
     try {
 
-        let updateData = { ...req.body }
-
-        const categoryData = await Course.findById(req.params.id)
+        const courseData = await Course.findById(req.params.id)
 
         console.log("req.file", req.file);
-        console.log("categoryData", categoryData);
+        console.log("categoryData", courseData);
 
+        let updateData = { ...req.body, course_img: { public_id: courseData.course_img.public_id, url: courseData.course_img.url } }
 
 
         if (req.file) {
-            fs.unlink(categoryData.course_img, (error) => {
-                console.log("Image Not Delete And update", error);
-            })
+            // fs.unlink(categoryData.course_img, (error) => {
+            //     console.log("Image Not Delete And update", error);
+            // })
 
-            updateData.course_img = req.file.path
+            await DeleteCloudinary(courseData?.course_img?.public_id)
+
+            const obj = await UpdateCloudinary(req.file.path, "Course")
+
+            updateData.course_img = { public_id: obj.public_id, url: obj.url }
         }
 
 
@@ -104,18 +114,20 @@ const deleteCourse = async (req, res) => {
 
         const course = await Course.findByIdAndDelete(req.params.id)
 
+        await DeleteCloudinary(course?.course_img?.public_id)
+
         console.log(course, course.course_img);
 
 
         // const path = course + './public/images/course_img/'
 
-        fs.unlink(course.course_img, (err) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("Delete Sucessfully");
-            }
-        })
+        // fs.unlink(course.course_img, (err) => {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log("Delete Sucessfully");
+        //     }
+        // })
 
         if (!course) {
             return res.status(400).json({ data: null, meassage: "Course Not delete" })
@@ -141,7 +153,7 @@ const activeCourse = async (req, res) => {
             { new: true, runValidators: true }
         )
 
-        console.log("ActiveCourse",course);
+        console.log("ActiveCourse", course);
 
 
         if (!course) {

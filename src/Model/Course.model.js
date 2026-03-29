@@ -2,9 +2,9 @@ const { default: mongoose } = require("mongoose");
 
 const CoursiesSchema = new mongoose.Schema(
     {
-        category_id:{
-            type:mongoose.Types.ObjectId,
-            ref:'categories'
+        category_id: {
+            type: mongoose.Types.ObjectId,
+            ref: 'categories'
         },
         name: {
             type: String,
@@ -14,21 +14,26 @@ const CoursiesSchema = new mongoose.Schema(
         description: {
             type: String
         },
-        price:{
-            type:Number
+        price: {
+            type: Number
         },
-        week:{
-            type:Number
+        week: {
+            type: Number
         },
-        course_img:{
-            type:String
+        course_img: {
+            public_id: {
+                type: String
+            },
+            url: {
+                type: String
+            }
         },
-        url:{
-            type:String
+        url: {
+            type: String
         },
-        gst_number:{
-            type:String,
-            uppercase:true,
+        gst_number: {
+            type: String,
+            uppercase: true,
         },
         is_active: {
             type: Boolean,
@@ -36,12 +41,12 @@ const CoursiesSchema = new mongoose.Schema(
         }
     },
     {
-        timestamps:true,
-        versionKey:false,
+        timestamps: true,
+        versionKey: false,
 
     }
 )
 
 const Course = mongoose.model('coursies', CoursiesSchema);
 
-module.exports=Course
+module.exports = Course
