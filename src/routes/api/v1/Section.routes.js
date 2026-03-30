@@ -1,37 +1,18 @@
 const express = require("express")
+const { SectionController } = require("../../../Controller")
 
 const router = express.Router()
 
 
-router.get('/getAllSection', (req, res) => {
-    res.status(200).json({ method: 'AllSection get Sucessfully' })
-})
+// router.get('/getAllSection', SectionController.getAll)
 
 //http://localhost:8080/api/v1/category/getSection
-router.get('/getSection', (req, res) => {
-    res.status(200).json({ id: 101, name: 'abc' })
-})
+router.get('/getSection', SectionController.getSection)
 
-router.post('/addSection', (req, res) => {
-    res.status(200).json({ method: 'Section added Sucessfully' })
+router.post('/addSection',SectionController.addsection)
 
+router.put('/updateSection/:id', SectionController.upadatesection)
 
-})
-
-router.put('/updateSection/:id', (req, res) => {
-    const id = req.params.id
-
-    res.status(200).json({ method: 'Section update Sucessfully' })
-
-    console.log(req.body);
-})
-
-router.delete('/deleteSection/:id', (req, res) => {
-    // const id=req.params.id
-
-    console.log(req.query);
-
-    res.status(200).json({ method: 'Section delete Sucessfully' })
-})
+router.delete('/deleteSection/:id', SectionController.deletesection)
 
 module.exports = router
