@@ -6,7 +6,7 @@ const doc = {
         title: 'LMS Backend',              // by default: 'REST API'
         description: 'LMS Backend APIs'         // by default: ''
     },
-    host: 'localhost:8080',                 // by default: 'localhost:3000'
+    host: 'https://learn-node-js-ciu4.vercel.app/',                 // by default: 'localhost:3000'
     basePath: '/api/v1',             // by default: '/'
     schemes: [],              // by default: ['http']
     consumes: [],             // by default: ['application/json']
