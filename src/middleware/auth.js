@@ -5,7 +5,7 @@ const User = require("../Model/user.model");
 const Auth = (roles) => async (req, res, next) => {
     try {
 
-        const token = req.cookies.accessToken || req.header("Authorization")?.replace("Beare ", "")
+        const token = req.cookies.accessToken || req.header("Authorization")?.replace("Bearer ", "")
         console.log(token);
 
 

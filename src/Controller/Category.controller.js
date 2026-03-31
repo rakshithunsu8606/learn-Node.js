@@ -5,6 +5,7 @@ const fs = require("fs")
 console.log("hello");
 
 const getAllCategory = async (req, res) => {
+    // #swagger.tags = ['Category']
     try {
         const CategoryAll = await Category.find();
 
@@ -19,6 +20,7 @@ const getAllCategory = async (req, res) => {
 }
 
 const getCategory = async (req, res) => {
+    // #swagger.tags = ['Category']
     try {
         console.log(req.params.id);
 
@@ -35,6 +37,32 @@ const getCategory = async (req, res) => {
 }
 
 const addCategory = async (req, res) => {
+    // #swagger.tags = ['Category']
+    /* #swagger.security = [{
+            "apiKeyAuth": []
+    }] */
+    // #swagger.consumes = ['multipart/form-data'] 
+    /* #swagger.parameters['name'] = {
+        in: 'formData',                            
+        description: 'Category name',                   
+        required: true,                     
+        type:'string',                              
+    } */
+
+    /* #swagger.parameters['description'] = {
+        in: 'formData',                            
+        description: 'Category description',                   
+        required: true,                     
+        type:'string',                           
+    } */
+
+    /* #swagger.parameters['category_img'] = {
+        in: 'formData',                            
+        description: 'Category category_img',                   
+        required: true,                     
+        type:'file',                          
+    } */
+
     try {
         console.log("addCategory:", req.body, req.file, req.user);
 
@@ -58,6 +86,32 @@ const addCategory = async (req, res) => {
 }
 
 const updateCategory = async (req, res) => {
+    // #swagger.tags = ['Category']
+    /* #swagger.security = [{
+          "apiKeyAuth": []
+        }] */
+    // #swagger.consumes = ['multipart/form-data'] 
+
+    /* #swagger.parameters['name'] = {
+        in: 'formData',                            
+        description: 'Category name',                                       
+        type:'string',                              
+    } */
+
+    /* #swagger.parameters['description'] = {
+        in: 'formData',                            
+        description: 'Category description',                                       
+        type:'string',                           
+    } */
+
+    /* #swagger.parameters['category_img'] = {
+        in: 'formData',                            
+        description: 'Category category_img',                                       
+        type:'file',                          
+    } */
+
+
+
     try {
         // console.log(req.params.id);
 
@@ -97,6 +151,10 @@ const updateCategory = async (req, res) => {
 }
 
 const deleteCategory = async (req, res) => {
+    // #swagger.tags = ['Category']
+    /* #swagger.security = [{
+           "apiKeyAuth": []
+    }] */
     try {
         console.log(req.params.id);
 
@@ -122,11 +180,12 @@ const deleteCategory = async (req, res) => {
 }
 
 const activeCategory = async (req, res) => {
+    // #swagger.tags = ['Category']
     try {
         const categories = await Category.aggregate([
             {
                 $match: {
-                    isActive: true
+                    is_active: true
                 }
             },
             {
@@ -150,6 +209,6 @@ module.exports = {
     getCategory,
     addCategory,
     updateCategory,
-    deleteCategory,  
+    deleteCategory,
     activeCategory
 }

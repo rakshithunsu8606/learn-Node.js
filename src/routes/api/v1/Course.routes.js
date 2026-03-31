@@ -17,7 +17,7 @@ router.put('/updateCourse/:id', upload.single('course_img'), CourseiesController
 
 router.delete('/deleteCourse/:id', CourseiesController.deleteCourse)
 
-router.put('/activeCourse/:id',CourseiesController.activeCourse)
+// router.get('/activeCourse',CourseiesController.activeCourse)
 
 
 module.exports = router

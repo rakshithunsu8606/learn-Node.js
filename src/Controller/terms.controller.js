@@ -5,6 +5,8 @@ const pool = require("../db/Mysql");
 console.log("hello");
 
 const getAllTerms = async (req, res) => {
+    // #swagger.tags = ['Terms']
+
     try {
         const [rows] = await pool.query('SELECT * FROM terms ');
 
@@ -29,10 +31,25 @@ const getAllTerms = async (req, res) => {
 }
 
 const getTerms = async (req, res) => {
+    // #swagger.tags = ['Terms']
 
+    // try {
+    //     console.log(req.params.id);
+
+    //     const terms = await pool.query('SELECT * FROM terms')
+
+    //     if (!terms) {
+    //         return res.status(400).json({ data: null, meassage: "getTerms Not added" })
+    //     }
+
+    //     return res.status(200).json({ data: terms, meassage: "getTerms added Sucessfully" })
+    // } catch (error) {
+    //     return res.status(500).json({ data: null, meassage: "Incress Not define getTerms" + error.meassage })
+    // }
 }
 
 const addTerms = async (req, res) => {
+    // #swagger.tags = ['Terms']
     try {
         const { name, description } = req.body
 
@@ -60,6 +77,7 @@ const addTerms = async (req, res) => {
 }
 
 const updateTerms = async (req, res) => {
+    // #swagger.tags = ['Terms']
     try {
         const { name, description } = req.body
         const data = req.params.id
@@ -86,6 +104,7 @@ const updateTerms = async (req, res) => {
 }
 
 const deleteTerms = async (req, res) => {
+    // #swagger.tags = ['Terms']
     try {
         const data1 = [req.params.id]
         const [result] = await pool.query("DELETE FROM terms WHERE terms.id = ?", data1);
@@ -108,7 +127,7 @@ const deleteTerms = async (req, res) => {
 }
 
 const activeTerms = async (req, res) => {
-
+    // #swagger.tags = ['Terms']
 }
 
 module.exports = {

@@ -6,6 +6,7 @@ const sendSMS = require('../../server/twilo');
 // const cookie = require("cookie");
 
 const genrateToken = async (_id) => {
+    // #swagger.tags = ['Auth']
     try {
 
         const user = await User.findById(_id);
@@ -34,6 +35,7 @@ const genrateToken = async (_id) => {
 }
 
 const Registration = async (req, res) => {
+    // #swagger.tags = ['Auth']
 
     try {
         const { email, password, mobile_no } = req.body;
@@ -96,6 +98,8 @@ const Registration = async (req, res) => {
 }
 
 const ResetPass = async (req, res) => {
+    // #swagger.tags = ['Auth']
+
     try {
         const { email, password } = req.body;
 
@@ -116,7 +120,7 @@ const ResetPass = async (req, res) => {
         }
 
         const SecretPass = await bcrypt.hash(password, 10)
-        
+
 
         console.log(SecretPass);
 
@@ -142,6 +146,8 @@ const ResetPass = async (req, res) => {
 }
 
 const ForgotePass = async (req, res) => {
+    // #swagger.tags = ['Auth']
+
     try {
         const { email } = req.body;
 
@@ -190,6 +196,8 @@ const ForgotePass = async (req, res) => {
 
 
 const Login = async (req, res) => {
+    // #swagger.tags = ['Auth']
+
     try {
         const { email, password } = req.body;
 
@@ -271,6 +279,8 @@ const Login = async (req, res) => {
 }
 
 const VerifyUser = async (req, res) => {
+    // #swagger.tags = ['Auth']
+
     try {
         const { email, OTP } = req.body;
 
@@ -310,6 +320,7 @@ const VerifyUser = async (req, res) => {
 }
 
 const GentarateNewToken = async (req, res) => {
+    // #swagger.tags = ['Auth']
 
     try {
 
@@ -380,6 +391,8 @@ const GentarateNewToken = async (req, res) => {
 }
 
 const logOut = async (req, res) => {
+    // #swagger.tags = ['Auth']
+
     try {
         const { _id } = req.body
 
@@ -425,6 +438,8 @@ const logOut = async (req, res) => {
 }
 
 const cheakAuth = async (req, res) => {
+    // #swagger.tags = ['Auth']
+
     try {
         const token = req.cookies.accessToken || req.header("Authorization")?.replace("Beare ", "")
 

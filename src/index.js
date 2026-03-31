@@ -9,6 +9,8 @@ const { googleProvider, facebookProvider } = require('../server/passport.js');
 // const facebookProvider = require('../server/passport.js');
 const passport = require('passport');
 const createSocket = require('../server/createSocket.js');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 
 
 app.use(express.json())
@@ -18,13 +20,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/public', express.static('public'))
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
 googleProvider();
 facebookProvider();
 createSocket();
 
 app.use(cors({
-  origin: 'https://elevate-knowledge-eight.vercel.app',
-  // origin:'http://localhost:5173',
+  // origin: 'https://elevate-knowledge-eight.vercel.app',
+  origin:'http://localhost:5173',
   optionsSuccessStatus: 200,
   credentials: true
 }))
@@ -42,8 +47,8 @@ app.get('/', (req, res) => {
   res.send('Welcome The LMS Backend')
 })   
 
-// app.listen(process.env.PORT, () => {
-//   console.log(`Server Started At ${process.env.PORT}`);
-// })
+app.listen(process.env.PORT, () => {
+  console.log(`Server Started At ${process.env.PORT}`);
+})
 
-module.exports = app;
+// module.exports = app;
