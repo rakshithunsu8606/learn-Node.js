@@ -37,31 +37,7 @@ const getCategory = async (req, res) => {
 }
 
 const addCategory = async (req, res) => {
-    // #swagger.tags = ['Category']
-    /* #swagger.security = [{
-            "apiKeyAuth": []
-    }] */
-    // #swagger.consumes = ['multipart/form-data'] 
-    /* #swagger.parameters['name'] = {
-        in: 'formData',                            
-        description: 'Category name',                   
-        required: true,                     
-        type:'string',                              
-    } */
-
-    /* #swagger.parameters['description'] = {
-        in: 'formData',                            
-        description: 'Category description',                   
-        required: true,                     
-        type:'string',                           
-    } */
-
-    /* #swagger.parameters['category_img'] = {
-        in: 'formData',                            
-        description: 'Category category_img',                   
-        required: true,                     
-        type:'file',                          
-    } */
+    
 
     try {
         console.log("addCategory:", req.body, req.file, req.user);
