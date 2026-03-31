@@ -28,8 +28,8 @@ facebookProvider();
 createSocket();
 
 app.use(cors({
-  // origin: 'https://elevate-knowledge-eight.vercel.app',
-  origin:'http://localhost:5173',
+  origin: 'https://elevate-knowledge-eight.vercel.app',
+  // origin:'http://localhost:5173',
   optionsSuccessStatus: 200,
   credentials: true
 }))
@@ -47,8 +47,8 @@ app.get('/', (req, res) => {
   res.send('Welcome The LMS Backend')
 })   
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server Started At ${process.env.PORT}`);
-})
+// app.listen(process.env.PORT, () => {
+//   console.log(`Server Started At ${process.env.PORT}`);
+// })
 
-// module.exports = app;
+module.exports = app;
