@@ -240,7 +240,9 @@ const Login = async (req, res) => {
 
         const { accessToken, refreshToken } = await genrateToken(userExists._id)
 
-        console.log(accessToken, refreshToken);
+
+        console.log("ACCESS:", accessToken);
+        console.log("REFRESH:", refreshToken);
 
         const accOpt = {
             httpOnly: true,
@@ -441,7 +443,7 @@ const cheakAuth = async (req, res) => {
     // #swagger.tags = ['Auth']
 
     try {
-        const token = req.cookies.accessToken || req.header("Authorization")?.replace("Beare ", "")
+        const token = req.cookies.accessToken || req.header("Authorization")?.replace("Bearer ", "")
 
         if (!token) {
             return res.status(401).json({

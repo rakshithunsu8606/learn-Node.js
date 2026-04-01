@@ -6,12 +6,12 @@ const Auth = (roles) => async (req, res, next) => {
     try {
 
         const token = req.cookies.accessToken || req.header("Authorization")?.replace("Bearer ", "")
-        console.log(token);
+        console.log("token",token);
 
 
         const decode = await jwt.verify(token, process.env.ACCESS_KEY)
 
-        console.log(decode);
+        console.log("decode",decode);
 
         const user = await User.findById(decode._id)
 
@@ -44,7 +44,7 @@ const Auth = (roles) => async (req, res, next) => {
         return res.status(500).json({
             sucess: false,
             data: [],
-            message: error.meassage
+            message: error.message
         })
     }
 };
