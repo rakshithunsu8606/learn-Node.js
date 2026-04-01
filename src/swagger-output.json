@@ -5,7 +5,7 @@
     "title": "LMS Backend",
     "description": "LMS Backend APIs"
   },
-  "host": "https://learn-node-js-ciu4.vercel.app/",
+  "host": "localhost:8080",
   "basePath": "/api/v1",
   "tags": [
     {

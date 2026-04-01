@@ -64,9 +64,14 @@ const addCategory = async (req, res) => {
     } */
 
     try {
-        console.log("addCategory:", req.body, req.file, req.user);
+        // console.log("addCategory:", req.body, req.file, req.user);
+
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
 
         const obj = await UpdateCloudinary(req.file.path, "Category")
+
+        console.log("cloudinary obj:", obj);
 
         const category = await Category.create({ ...req.body, category_img: { public_id: obj.public_id, url: obj.url } })
 
