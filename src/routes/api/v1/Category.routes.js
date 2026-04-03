@@ -2,6 +2,8 @@ const express = require("express")
 const { CategoriesController } = require("../../../Controller")
 const upload = require("../../../middleware/upload")
 const Auth = require("../../../middleware/auth")
+const ValidationSchema = require("../../../middleware/Validation")
+const { addCategorySchema, updateCategorySchema, deleteCategorySchema } = require("../../../validators/Category.Validation")
 // const Auth = require("../../../middleware/auth")
 
 const router = express.Router()
@@ -15,11 +17,11 @@ router.get('/getCategory/:id', CategoriesController.getCategory)
 router.get('/activeCategory', CategoriesController.activeCategory)
 
 
-router.post('/addCategory', Auth(['user']), upload.single('category_img'), CategoriesController.addCategory)
+router.post('/addCategory', ValidationSchema(addCategorySchema), Auth(['user']), upload.single('category_img'), CategoriesController.addCategory)
 
-router.put('/updateCategory/:id', Auth(['user']), upload.single('category_img'), CategoriesController.updateCategory)
+router.put('/updateCategory/:id', ValidationSchema(updateCategorySchema), Auth(['user']), upload.single('category_img'), CategoriesController.updateCategory)
 
-router.delete('/deleteCategory/:id', Auth(['user']), CategoriesController.deleteCategory)
+router.delete('/deleteCategory/:id', ValidationSchema(deleteCategorySchema), Auth(['user']), CategoriesController.deleteCategory)
 
 module.exports = router
 

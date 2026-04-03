@@ -1,7 +1,7 @@
 const { UpdateCloudinary, DeleteCloudinary } = require("../../server/Cloudinary");
-const Category = require("../Model/Category.model")
-const fs = require("fs")
-
+const Category = require("../Model/Category.model");
+const fs = require("fs");
+// const { CategorySchema } = require("../validators/Category.Validator");
 console.log("hello");
 
 const getAllCategory = async (req, res) => {
@@ -69,6 +69,8 @@ const addCategory = async (req, res) => {
         console.log("BODY:", req.body);
         console.log("FILE:", req.file);
 
+        // await CategorySchema.validateAsync(req.body);
+
         const obj = await UpdateCloudinary(req.file.path, "Category")
 
         console.log("cloudinary obj:", obj);
@@ -86,7 +88,7 @@ const addCategory = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        return res.status(500).json({ data: null, meassage: "Incress Not define Category" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not define Category" + error.message })
     }
 }
 
@@ -120,6 +122,8 @@ const updateCategory = async (req, res) => {
     try {
         // console.log(req.params.id);
 
+        
+
         const categoryData = await Category.findById(req.params.id)
 
         console.log("req.file", req.file);
@@ -127,6 +131,8 @@ const updateCategory = async (req, res) => {
 
         let updateData = { ...req.body, category_img: { public_id: categoryData.category_img.public_id, url: categoryData.category_img.url } }
 
+        // await CategorySchema.validateAsync(updateData);
+            
         if (req.file) {
             // fs.unlink(categoryData.category_img, (error) => {
             //     console.log("Image Not Delete And update", error);
@@ -151,7 +157,7 @@ const updateCategory = async (req, res) => {
 
         return res.status(200).json({ data: category, meassage: "Category update Sucessfully" })
     } catch (error) {
-        return res.status(500).json({ data: null, meassage: "Incress Not update Category" + error.meassage })
+        return res.status(500).json({ data: null, meassage: "Incress Not update Category" + error.message })
     }
 }
 
