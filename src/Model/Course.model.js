@@ -18,7 +18,11 @@ const CoursiesSchema = new mongoose.Schema(
             type: Number
         },
         week: {
-            type: Number
+            type: String
+        },
+        instructure_id: {
+            type: mongoose.Types.ObjectId,
+            ref: "user",
         },
         course_img: {
             public_id: {
@@ -28,8 +32,13 @@ const CoursiesSchema = new mongoose.Schema(
                 type: String
             }
         },
-        url: {
-            type: String
+        course_video: {
+            public_id: {
+                String
+            },
+            url: {
+                String
+            }
         },
         gst_number: {
             type: String,

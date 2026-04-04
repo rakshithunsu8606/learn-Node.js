@@ -65,15 +65,15 @@ const addCourse = async (req, res) => {
 
     try {
         console.log("req.body", req.body);
-        console.log("req.file", req.file)
+        console.log("req.file", req.files)
 
-        const obj = await UpdateCloudinary(req.file.path, "Course")
+        const obj = await UpdateCloudinary(req.files.path, "Course")
 
         // const course = await Course.create({ ...req.body, course_img: req.file.path })
 
         // const course = await Course.create(req.body)
 
-        const course = await Course.create({ ...req.body, course_img: { public_id: obj.public_id, url: obj.url } })
+        const course = await Course.create({ ...req.body, course_img: { public_id: obj.public_id, url: obj.url }, course_video: { public_id: obj.public_id, url: obj.url } })
 
         console.log("categoryData", course);
 

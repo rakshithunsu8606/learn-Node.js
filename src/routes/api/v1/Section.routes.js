@@ -4,7 +4,7 @@ const { SectionController } = require("../../../Controller")
 const router = express.Router()
 
 
-// router.get('/getAllSection', SectionController.getAll)
+router.get('/getAllSection', SectionController.getAllSection)
 
 //http://localhost:8080/api/v1/category/getSection
 router.get('/getSection', SectionController.getSection)
