@@ -24,14 +24,14 @@ const CoursiesSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: "user",
         },
-        course_img: {
+        course_img: [{
             public_id: {
                 type: String
             },
             url: {
                 type: String
             }
-        },
+        }],
         course_video: {
             public_id: {
                 String

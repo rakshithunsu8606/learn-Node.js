@@ -67,13 +67,33 @@ const addCourse = async (req, res) => {
         console.log("req.body", req.body);
         console.log("req.file", req.files)
 
-        const obj = await UpdateCloudinary(req.files.path, "Course")
+        // console.log("req.fi",req?.body?.course_video);
 
         // const course = await Course.create({ ...req.body, course_img: req.file.path })
 
         // const course = await Course.create(req.body)
 
-        const course = await Course.create({ ...req.body, course_img: { public_id: obj.public_id, url: obj.url }, course_video: { public_id: obj.public_id, url: obj.url } })
+        const filesss = req.files
+
+        console.log("filesss", filesss);
+
+        const urls = []
+
+        for (const file of filesss) {
+            console.log("err", file.path);
+
+            const obj = await UpdateCloudinary(file.path, "Course")
+            urls.push({
+                public_id: obj.public_id,
+                url: obj.url
+            })
+        }
+
+        console.log("urls:", urls);
+
+
+
+        const course = await Course.create({ ...req.body, course_img: urls })
 
         console.log("categoryData", course);
 
@@ -113,22 +133,41 @@ const updateCourse = async (req, res) => {
 
         const courseData = await Course.findById(req.params.id)
 
-        console.log("req.file", req.file);
+        console.log("req.file", req.files);
         console.log("categoryData", courseData);
+
+        const filesssUpdate = req.files
+
+        console.log("filesssUpdate", filesssUpdate);
 
         let updateData = { ...req.body, course_img: { public_id: courseData.course_img.public_id, url: courseData.course_img.url } }
 
+        // let updateData = { ...req.body }
 
-        if (req.file) {
+
+        if (filesssUpdate) {
             // fs.unlink(categoryData.course_img, (error) => {
             //     console.log("Image Not Delete And update", error);
             // })
 
             await DeleteCloudinary(courseData?.course_img?.public_id)
 
-            const obj = await UpdateCloudinary(req.file.path, "Course")
+            // const obj = await UpdateCloudinary(req.file.path, "Course")
 
-            updateData.course_img = { public_id: obj.public_id, url: obj.url }
+            const urls = []
+
+            for (const file of filesssUpdate) {
+
+                const obj = await UpdateCloudinary(file.path, "Course")
+                urls.push({
+                    public_id: obj.public_id,
+                    url: obj.url
+                })
+            }
+
+            console.log("urls:", urls);
+
+            updateData.course_img = urls;
         }
 
 
