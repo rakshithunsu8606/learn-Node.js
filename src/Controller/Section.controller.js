@@ -36,7 +36,7 @@ const addsection = async (req, res) => {
     try {
         const section = await Section.create(req.body)
 
-        console.log(section);
+        console.log("section",section);
 
         if (!section) {
             return res.status(400).json({ data: null, message: "Section Not Difend" })

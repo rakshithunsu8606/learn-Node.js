@@ -65,7 +65,7 @@ const addCourse = async (req, res) => {
 
     try {
         console.log("req.body", req.body);
-        console.log("req.file", req.files)
+        console.log("req.filesss", req.files)
 
         // console.log("req.fi",req?.body?.course_video);
 
@@ -140,17 +140,23 @@ const updateCourse = async (req, res) => {
 
         console.log("filesssUpdate", filesssUpdate);
 
-        let updateData = { ...req.body, course_img: { public_id: courseData.course_img.public_id, url: courseData.course_img.url } }
+        // let updateData = { ...req.body, course_img: { public_id: courseData.course_img.public_id, url: courseData.course_img.url } }
 
-        // let updateData = { ...req.body }
+        let updateData = { ...req.body }
 
 
-        if (filesssUpdate) {
+        if (filesssUpdate.length > 0) {
             // fs.unlink(categoryData.course_img, (error) => {
             //     console.log("Image Not Delete And update", error);
             // })
 
-            await DeleteCloudinary(courseData?.course_img?.public_id)
+            // for (const Delete of courseData.course_img) {
+            //     await DeleteCloudinary(Delete?.public_id)
+            // }
+
+            for (const Delete of courseData.course_img) {
+                await DeleteCloudinary(Delete?.public_id)
+            }
 
             // const obj = await UpdateCloudinary(req.file.path, "Course")
 
@@ -168,6 +174,8 @@ const updateCourse = async (req, res) => {
             console.log("urls:", urls);
 
             updateData.course_img = urls;
+        } else {
+            updateData.course_img = courseData.course_img;
         }
 
 

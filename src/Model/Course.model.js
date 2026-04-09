@@ -32,14 +32,14 @@ const CoursiesSchema = new mongoose.Schema(
                 type: String
             }
         }],
-        course_video: {
-            public_id: {
-                String
-            },
-            url: {
-                String
-            }
-        },
+        // course_video: {
+        //     public_id: {
+        //         String
+        //     },
+        //     url: {
+        //         String
+        //     }
+        // },
         gst_number: {
             type: String,
             uppercase: true,

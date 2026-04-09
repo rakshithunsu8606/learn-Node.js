@@ -10,10 +10,10 @@ router.get('/getAllCourse', CourseiesController.getAllCourse)
 //http://localhost:8080/api/v1/category/getCourse
 router.get('/getCourse/:id', CourseiesController.getCourse)
 
-router.post('/addCourse', upload.array('course_img', 10), CourseiesController.addCourse)
+router.post('/addCourse', upload.array('course_img'), CourseiesController.addCourse)
 
 
-router.put('/updateCourse/:id', upload.array('course_img', 10), CourseiesController.updateCourse)
+router.put('/updateCourse/:id', upload.array('course_img'), CourseiesController.updateCourse)
 
 router.delete('/deleteCourse/:id', CourseiesController.deleteCourse)
 

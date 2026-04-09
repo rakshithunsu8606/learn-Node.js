@@ -8,8 +8,7 @@ const SectionSchema = new mongoose.Schema(
         },
         name: {
             type: String,
-            unique: true,
-            trim: true
+            // trim: true
         },
         description: {
             type: String

@@ -12,9 +12,9 @@ const genrateToken = async (_id) => {
         const user = await User.findById(_id);
 
         const accessToken = jwt.sign(
-            { _id, expire: '1h', role: user.referece },
+            { _id, expire: '1d', role: user.referece },
             process.env.ACCESS_KEY,
-            { expiresIn: 60 * 60 }
+            { expiresIn: 60 * 60 * 24 }
         )
 
         const refreshToken = jwt.sign(
