@@ -71,13 +71,29 @@ const addCategory = async (req, res) => {
 
         // await CategorySchema.validateAsync(req.body);
 
-        const obj = await UpdateCloudinary(req.file.path, "Category")
+        // const obj = await UpdateCloudinary(req.file.path, "Category")
 
-        console.log("cloudinary obj:", obj);
+        // console.log("cloudinary obj:", obj);
 
-        const category = await Category.create({ ...req.body, category_img: { public_id: obj.public_id, url: obj.url } })
+        // const category = await Category.create({ ...req.body, category_img: { public_id: obj.public_id, url: obj.url } })
 
-        console.log("categoryData", category);
+        // console.log("categoryData", category);
+
+        const ImageData = req.files
+
+        let uploadedImages = [];
+
+        for (const file of ImageData) {
+
+            const obj = await UpdateCloudinary(file.path, "category_img");
+
+            uploadedImages.push({
+                public_id: obj.public_id,
+                url: obj.url
+            });
+        }
+
+        const category = await Category.create({ ...req.body, category_img: uploadedImages })
 
 
         if (!category) {
@@ -122,27 +138,47 @@ const updateCategory = async (req, res) => {
     try {
         // console.log(req.params.id);
 
-        
+
 
         const categoryData = await Category.findById(req.params.id)
 
         console.log("req.file", req.file);
         console.log("categoryData", categoryData);
 
-        let updateData = { ...req.body, category_img: { public_id: categoryData.category_img.public_id, url: categoryData.category_img.url } }
+        let updateData = { ...req.body }
 
         // await CategorySchema.validateAsync(updateData);
-            
-        if (req.file) {
+
+        if (req.files?.length > 0) {
             // fs.unlink(categoryData.category_img, (error) => {
             //     console.log("Image Not Delete And update", error);
             // })   
 
-            await DeleteCloudinary(categoryData?.category_img?.public_id)
+            for (const imagedel of categoryData.category_img) {
+                await DeleteCloudinary(imagedel.public_id);
+            }
 
-            const obj = await UpdateCloudinary(req.file.path, "Category")
 
-            updateData.category_img = { public_id: obj.public_id, url: obj.url }
+            const ImageData = req.files
+            let uploadedImages = [];
+            //new update image
+            for (const file of ImageData) {
+
+                const obj = await UpdateCloudinary(file.path, "category_img");
+
+
+                uploadedImages.push({
+                    public_id: obj.public_id,
+                    url: obj.url
+                });
+
+                updateData.category_img = uploadedImages;
+            }
+
+
+            console.log("uploadedImages", uploadedImages);
+        } else {
+            updateData.category_img = categoryData.category_img;
         }
 
         const category = await Category.findByIdAndUpdate(

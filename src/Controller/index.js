@@ -5,4 +5,6 @@ module.exports.LoginController=require("./Login.controller"),
 module.exports.VerifyController=require("./Verify.controller"),
 module.exports.UserController=require("./user.controller"),
 module.exports.TermsController=require("./terms.controller"),
-module.exports.SectionController=require("./Section.controller")
+module.exports.SectionController=require("./Section.controller"),
+module.exports.QuizzController=require("./Quiz.controller")
+module.exports.QuizContentController=require("./QuizContent.controller")

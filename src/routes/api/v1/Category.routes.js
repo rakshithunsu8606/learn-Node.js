@@ -17,9 +17,9 @@ router.get('/getCategory/:id', CategoriesController.getCategory)
 router.get('/activeCategory', CategoriesController.activeCategory)
 
 
-router.post('/addCategory', ValidationSchema(addCategorySchema), Auth(['user']), upload.single('category_img'), CategoriesController.addCategory)
+router.post('/addCategory', ValidationSchema(addCategorySchema), Auth(['user']), upload.array('category_img'), CategoriesController.addCategory)
 
-router.put('/updateCategory/:id', ValidationSchema(updateCategorySchema), Auth(['user']), upload.single('category_img'), CategoriesController.updateCategory)
+router.put('/updateCategory/:id', ValidationSchema(updateCategorySchema), Auth(['user']), upload.array('category_img'), CategoriesController.updateCategory)
 
 router.delete('/deleteCategory/:id', ValidationSchema(deleteCategorySchema), Auth(['user']), CategoriesController.deleteCategory)
 

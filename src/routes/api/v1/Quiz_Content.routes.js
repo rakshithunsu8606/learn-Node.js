@@ -1,37 +1,18 @@
 const express = require("express")
+const { QuizContentController } = require("../../../Controller")
 
 const router = express.Router()
 
 
-router.get('/getAllQuiz_Content', (req, res) => {
-    res.status(200).json({ method: 'AllQuiz_Content get Sucessfully' })
-})
+router.get('/getAllQuiz_Content', QuizContentController.getAllQuizContent)
 
 //http://localhost:8080/api/v1/category/getQuiz_Content
-router.get('/getQuiz_Content', (req, res) => {
-    res.status(200).json({ id: 101, name: 'abc' })
-})
+router.get('/getQuiz_Content', QuizContentController.getQuizContent)
 
-router.post('/addQuiz_Content', (req, res) => {
-    res.status(200).json({ method: 'Quiz_Content added Sucessfully' })
+router.post('/addQuiz_Content', QuizContentController.addQuizContent)
 
+router.put('/updateQuiz_Content/:id', QuizContentController.upadateQuizContent)
 
-})
-
-router.put('/updateQuiz_Content/:id', (req, res) => {
-    const id = req.params.id
-
-    res.status(200).json({ method: 'Quiz_Content update Sucessfully' })
-
-    console.log(req.body);
-})
-
-router.delete('/deleteQuiz_Content/:id', (req, res) => {
-    // const id=req.params.id
-
-    console.log(req.query);
-
-    res.status(200).json({ method: 'Quiz_Content delete Sucessfully' })
-})
+router.delete('/deleteQuiz_Content/:id', QuizContentController.deleteQuizContent)
 
 module.exports = router
