@@ -8,3 +8,4 @@ module.exports.TermsController=require("./terms.controller"),
 module.exports.SectionController=require("./Section.controller"),
 module.exports.QuizzController=require("./Quiz.controller")
 module.exports.QuizContentController=require("./QuizContent.controller")
+module.exports.ContentController=require("./Content.controller")

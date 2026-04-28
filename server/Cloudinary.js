@@ -12,12 +12,10 @@ const UpdateCloudinary = async (file, folder) => {
         const uploadResult = await cloudinary.uploader
             .upload(
                 file, {
-                folder: folder  
+                folder: folder
             }
             )
-            .catch((error) => {
-                console.log(error);
-            });
+
 
         console.log("uploadResult:", uploadResult)
 
@@ -30,6 +28,48 @@ const UpdateCloudinary = async (file, folder) => {
         console.log(error);
     }
 }
+
+const VideoCloudinary = async (file, folder) => {
+    try {
+        const uploadResult = await cloudinary.uploader
+            .upload(
+                file, {
+                folder: folder,
+                resource_type: "auto"
+            }
+            )
+
+
+        console.log("uploadResult:", uploadResult)
+
+        return {
+            public_id: uploadResult.public_id,
+            url: uploadResult.url
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const DeleteVideo_Cloud = async (public_id) => {
+    console.log("public_id", public_id);
+
+    try {
+        const result = cloudinary.uploader.destroy(public_id, {
+            resource_type: "auto"
+        },(err, result) => {
+            console.log("result:", result);
+            console.log("Error:", err);
+        });
+
+        // console.log("Delete result:", result);
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 
 const DeleteCloudinary = (public_id) => {
     console.log("public_id", public_id);
@@ -49,5 +89,7 @@ const DeleteCloudinary = (public_id) => {
 
 module.exports = {
     UpdateCloudinary,
-    DeleteCloudinary
+    DeleteCloudinary,
+    VideoCloudinary,
+    DeleteVideo_Cloud
 }

@@ -16,6 +16,12 @@ const QuizContentSchema = new mongoose.Schema(
         }],
         answer: {
             type: String
+        },
+        Correct_Answer:{
+            type: String
+        },
+        mark:{
+            type: Number
         }
     },
     {

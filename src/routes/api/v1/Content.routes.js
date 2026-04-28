@@ -1,37 +1,19 @@
 const express = require("express")
+const { ContentController } = require("../../../Controller")
+const upload = require("../../../middleware/upload")
 
 const router = express.Router()
 
 
-router.get('/getAllContent', (req, res) => {
-    res.status(200).json({ method: 'AllContent get Sucessfully' })
-})
+router.get('/getAllContent', ContentController.getAllContent)
 
 //http://localhost:8080/api/v1/category/getContent
-router.get('/getContent', (req, res) => {
-    res.status(200).json({ id: 101, name: 'abc' })
-})
+router.get('/getContent/:id', ContentController.getContent)
 
-router.post('/addContent', (req, res) => {
-    res.status(200).json({ method: 'Content added Sucessfully' })
+router.post('/addContent', upload.array('video'), ContentController.addContent)
 
+router.put('/updateContent/:id', upload.array('video'), ContentController.upadateContent)
 
-})
+router.delete('/deleteContent/:id', ContentController.deleteContent)
 
-router.put('/updateContent/:id', (req, res) => {
-    const id = req.params.id
-
-    res.status(200).json({ method: 'Content update Sucessfully' })
-
-    console.log(req.body);
-})
-
-router.delete('/deleteContent/:id', (req, res) => {
-    // const id=req.params.id
-
-    console.log(req.query);
-
-    res.status(200).json({ method: 'Content delete Sucessfully' })
-})
-
-module.exports = router
+module.exports = router 

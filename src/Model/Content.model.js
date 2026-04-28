@@ -1,18 +1,27 @@
 const { default: mongoose } = require("mongoose");
 
-const SectionSchema = new mongoose.Schema(
+const ContentSchema = new mongoose.Schema(
     {
         course_id: {
             type: mongoose.Types.ObjectId,
             ref: 'course'
         },
+        Section_id: {
+            type: mongoose.Types.ObjectId,
+            ref: 'section'
+        },
         name: {
             type: String,
             trim: true
         },
-        description: {
-            type: String
-        }
+        video: [{
+            public_id: {
+                type: String
+            },
+            url: {
+                type: String
+            }
+        }]
     },
     {
         timestamps: true,
@@ -21,6 +30,6 @@ const SectionSchema = new mongoose.Schema(
     }
 )
 
-const Section = mongoose.model('sections', SectionSchema);
+const Content = mongoose.model('content', ContentSchema);
 
-module.exports = Section
+module.exports = Content
