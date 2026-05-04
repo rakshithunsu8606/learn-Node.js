@@ -12,7 +12,7 @@ const UpdateCloudinary = async (file, folder) => {
         const uploadResult = await cloudinary.uploader
             .upload(
                 file, {
-                folder: folder
+                folder: folder,
             }
             )
 
@@ -44,7 +44,8 @@ const VideoCloudinary = async (file, folder) => {
 
         return {
             public_id: uploadResult.public_id,
-            url: uploadResult.url
+            url: uploadResult.url,
+            type: uploadResult.resource_type
         }
 
     } catch (error) {
@@ -52,13 +53,13 @@ const VideoCloudinary = async (file, folder) => {
     }
 }
 
-const DeleteVideo_Cloud = async (public_id) => {
+const DeleteVideo_Cloud = async (public_id, type) => {
     console.log("public_id", public_id);
 
     try {
         const result = cloudinary.uploader.destroy(public_id, {
-            resource_type: "auto"
-        },(err, result) => {
+            resource_type: type
+        }, (err, result) => {
             console.log("result:", result);
             console.log("Error:", err);
         });

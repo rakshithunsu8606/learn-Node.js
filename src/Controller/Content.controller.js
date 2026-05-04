@@ -41,18 +41,19 @@ const addContent = async (req, res) => {
 
         console.log("filesss", filesss);
 
-        const urls = []
+        let urls = [];
 
-        for (const file of filesss) {
-            console.log("err", file.path);
+        if (filesss.length > 0) {
+            for (const file of filesss) {
+                const obj = await VideoCloudinary(file.path, "video");
 
-            const obj = await VideoCloudinary(file.path, "video")
-            urls.push({
-                public_id: obj.public_id,
-                url: obj.url
-            })
+                urls.push({
+                    public_id: obj.public_id,
+                    url: obj.url,
+                    type: obj.type
+                });
+            }
         }
-
 
         const content = await Content.create({
             ...req.body, video: urls
@@ -81,7 +82,7 @@ const deleteContent = async (req, res) => {
         console.log(content);
 
         for (const videos of content?.video) {
-            await DeleteVideo_Cloud(videos?.public_id)
+            await DeleteVideo_Cloud(videos?.public_id, videos?.type)
         }
 
         console.log(content, content?.video);
@@ -116,7 +117,7 @@ const upadateContent = async (req, res) => {
         if (filesssUpdate.length > 0) {
 
             for (const video of contentData.video) {
-                await DeleteVideo_Cloud(video.public_id)
+                await DeleteVideo_Cloud(video.public_id, video.type)
             }
 
 
@@ -127,7 +128,8 @@ const upadateContent = async (req, res) => {
 
                 urls.push({
                     public_id: obj.public_id,
-                    url: obj.url
+                    url: obj.url,
+                    type: obj.type
                 })
             }
 
@@ -137,7 +139,7 @@ const upadateContent = async (req, res) => {
             updateData.video = contentData.video
         }
 
-        
+
         const updatedContent = await Content.findByIdAndUpdate(
             req.params.id,
             updateData,

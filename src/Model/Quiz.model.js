@@ -19,10 +19,14 @@ const QuizSchema = new mongoose.Schema(
             type: String,
             trim: true
         },
+        instructure_id: {
+            type: mongoose.Types.ObjectId,
+            ref: "user",
+        },
         option: [{
             type: Array
         }],
-        answer:{
+        answer: {
             type: String
         }
     },

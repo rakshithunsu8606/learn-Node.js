@@ -12,6 +12,10 @@ const SectionSchema = new mongoose.Schema(
         },
         description: {
             type: String
+        },
+        instructure_id: {
+            type: mongoose.Types.ObjectId,
+            ref: "user",
         }
     },
     {
