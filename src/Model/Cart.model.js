@@ -1,37 +1,21 @@
 const { default: mongoose } = require("mongoose");
 
-const ContentSchema = new mongoose.Schema(
+const CartSchema = new mongoose.Schema(
     {
-        course_id: {
+        user_id: {
             type: mongoose.Types.ObjectId,
-            ref: 'course'
+            ref: 'user'
         },
-        Section_id: {
-            type: mongoose.Types.ObjectId,
-            ref: 'section'
-        },
-        name: {
-            type: String,
-            trim: true
-        },
-        video: [{
-            public_id: {
-                type: String
+        items: [{
+            course_id: {
+                type: mongoose.Types.ObjectId,
+                ref: 'course'
             },
-            url: {
-                type: String
-            },
-            type: {
+            price: {
                 type: String
             }
         }],
-        instructure_id: {
-            type: mongoose.Types.ObjectId,
-            ref: "user",
-        },
-        order: {
-            type: String
-        }
+
     },
     {
         timestamps: true,
@@ -40,6 +24,6 @@ const ContentSchema = new mongoose.Schema(
     }
 )
 
-const Content = mongoose.model('content', ContentSchema);
+const Cart = mongoose.model('cart', CartSchema);
 
-module.exports = Content
+module.exports = Cart
