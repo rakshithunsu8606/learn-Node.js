@@ -1,24 +1,24 @@
 const { default: mongoose } = require("mongoose");
 
-const PaymentSchema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
     {
-        Cart_id: {
+        user_id: {
             type: mongoose.Types.ObjectId,
-            ref: 'cart  '
+            ref: 'user'
         },
-        transactionId: {
+        email: {
             type: String
         },
+        course_id: [{
+            type: mongoose.Types.ObjectId,
+            ref: 'course'
+        }],
         amount: {
-            type: Number
+            type: String
         },
         status: {
             type: String,
         },
-        datetime: {
-            type: Date,
-
-        }
     },
     {
         timestamps: true,
@@ -26,5 +26,5 @@ const PaymentSchema = new mongoose.Schema(
     }
 );
 
-const Payment = mongoose.model("payment", PaymentSchema)
-module.exports = Payment
+const Order = mongoose.model("order", OrderSchema)
+module.exports = Order

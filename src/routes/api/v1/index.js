@@ -24,10 +24,12 @@ const UserRoutes=require("./User.routes")
 const WhishlistRoutes=require("./Whishlist.routes")
 const LoginRoutes=require("./Login.routes")
 const VerifyRoutes=require("./Verify.routes")
+const OrderRoutes=require("./Order.routes")
 
 //http://localhost:8080/api/v1/category
 router.use('/admission',AdmissionRouter)
 router.use('/blog',BlogRouter)
+router.use('/order',OrderRoutes)
 router.use('/card',CardRouter)
 router.use('/cart',CartRoutes)
 router.use('/category',categoryRouter)

@@ -1,3 +1,4 @@
+const Instance = require("../Config/Razorpay");
 const Payment = require("../Model/Payment.model");
 
 const getAllPayment = async (req, res) => {
@@ -36,7 +37,7 @@ const addPayment = async (req, res) => {
     try {
         const payment = await Payment.create(req.body)
 
-        console.log("payment",payment);
+        console.log("payment", payment);
 
         if (!payment) {
             return res.status(400).json({ data: null, message: "Payment Not Difend" })
@@ -94,10 +95,38 @@ const upadatePayment = async (req, res) => {
     }
 }
 
+const CreateOrder = async (req, res) => {
+    try {
+
+        const { amount } = req.body;
+
+        const options = {
+            amount: amount * 100,
+            currency: "INR"
+        };
+
+        const Order = await Instance.orders.create(options);
+
+        res.status(200).json({
+            success: true,
+            Order
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Create order failed"
+        });
+    }
+};
+
 module.exports = {
     deletePayment,
     upadatePayment,
     addPayment,
     getPayment,
-    getAllPayment
+    getAllPayment,
+    CreateOrder
 }

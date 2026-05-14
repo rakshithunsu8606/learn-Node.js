@@ -15,4 +15,6 @@ router.put('/updatePayment/:id', PaymentController.upadatePayment)
 
 router.delete('/deletePayment/:id', PaymentController.deletePayment)
 
+router.post('/create-order',PaymentController.CreateOrder)
+
 module.exports = router
