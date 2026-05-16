@@ -17,4 +17,6 @@ router.delete('/deletePayment/:id', PaymentController.deletePayment)
 
 router.post('/create-order',PaymentController.CreateOrder)
 
+router.post('/verifyPayment',PaymentController.verifyPayment)
+
 module.exports = router

@@ -4,7 +4,20 @@ const PaymentSchema = new mongoose.Schema(
     {
         Cart_id: {
             type: mongoose.Types.ObjectId,
-            ref: 'cart  '
+            ref: 'cart'
+        },
+        userId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'user'
+        },
+        orderId: {
+            type: String
+        },
+        paymentId: {
+            type: String
+        },
+        signature: {
+            type: String
         },
         transactionId: {
             type: String

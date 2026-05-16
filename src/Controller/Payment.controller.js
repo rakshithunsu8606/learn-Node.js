@@ -1,5 +1,6 @@
 const Instance = require("../Config/Razorpay");
 const Payment = require("../Model/Payment.model");
+const crypto = require('crypto');
 
 const getAllPayment = async (req, res) => {
     try {
@@ -98,18 +99,27 @@ const upadatePayment = async (req, res) => {
 const CreateOrder = async (req, res) => {
     try {
 
-        const { amount } = req.body;
+        const { amount, Cart_id, userId } = req.body;
 
         const options = {
-            amount: amount * 100,
+            amount: Number(amount),
             currency: "INR"
         };
 
         const Order = await Instance.orders.create(options);
 
+        const payment = await Payment.create({
+            orderId: Order.id,
+            amount: Order.amount,
+            status: 'pending',
+            userId,
+            Cart_id,
+        })
+
         res.status(200).json({
             success: true,
-            Order
+            Order,
+            key: process.env.RAZORPAY_API_KEY
         });
 
     } catch (error) {
@@ -122,11 +132,48 @@ const CreateOrder = async (req, res) => {
     }
 };
 
+
+const verifyPayment = async (req, res) => {
+    try {
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body
+
+        const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+
+        sha.update(`${razorpay_order_id + "|" + razorpay_payment_id}`)
+
+        const digset = sha.digest("hex")
+
+        if (digset !== razorpay_signature) {
+            return res.status(400).json({
+                message: "Payment Is a Failed"
+            })
+        }
+
+        const payment = await Payment.findOneAndUpdate(
+            { orderId: razorpay_order_id },
+            {
+                paymentId: razorpay_payment_id,
+                signature: razorpay_signature,
+                status: 'completed'
+            }
+        )
+
+        return res.status(200).json({
+            message: "Payment Successfully",
+            orderId: razorpay_order_id,
+            paymentId: razorpay_payment_id
+        })
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     deletePayment,
     upadatePayment,
     addPayment,
     getPayment,
     getAllPayment,
-    CreateOrder
+    CreateOrder,
+    verifyPayment
 }
