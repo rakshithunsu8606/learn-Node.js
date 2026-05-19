@@ -10,6 +10,15 @@ const PaymentSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: 'user'
         },
+        Pay_Cart: [{
+            course_id: {
+                type: mongoose.Types.ObjectId,
+                ref: 'course'
+            },
+            price: {
+                type: String
+            }
+        }],
         orderId: {
             type: String
         },

@@ -99,7 +99,7 @@ const upadatePayment = async (req, res) => {
 const CreateOrder = async (req, res) => {
     try {
 
-        const { amount, Cart_id, userId } = req.body;
+        const { amount, Cart_id, userId, Pay_Cart } = req.body;
 
         const options = {
             amount: Number(amount),
@@ -114,6 +114,7 @@ const CreateOrder = async (req, res) => {
             status: 'pending',
             userId,
             Cart_id,
+            Pay_Cart
         })
 
         res.status(200).json({

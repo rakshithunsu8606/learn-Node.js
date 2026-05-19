@@ -31,6 +31,9 @@ const ContentSchema = new mongoose.Schema(
         },
         order: {
             type: String
+        },
+        content_type: {
+            type:String
         }
     },
     {
