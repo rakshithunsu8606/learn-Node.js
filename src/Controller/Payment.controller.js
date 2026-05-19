@@ -139,68 +139,112 @@ const CreateOrder = async (req, res) => {
 
 
 const verifyPayment = async (req, res) => {
+
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body
 
-        const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+        const {
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature
+        } = req.body;
 
-        sha.update(`${razorpay_order_id + "|" + razorpay_payment_id}`)
+        const sha = crypto.createHmac(
+            "sha256",
+            process.env.RAZORPAY_KEY_SECRET
+        );
 
-        const digset = sha.digest("hex")
+        sha.update(
+            `${razorpay_order_id}|${razorpay_payment_id}`
+        );
 
-        if (digset !== razorpay_signature) {
+        const digest = sha.digest("hex");
+
+        if (digest !== razorpay_signature) {
+
             return res.status(400).json({
-                message: "Payment Is a Failed"
-            })
+                success: false,
+                message: "Payment Failed"
+            });
         }
 
         const payment = await Payment.findOneAndUpdate(
+
             { orderId: razorpay_order_id },
             {
                 paymentId: razorpay_payment_id,
                 signature: razorpay_signature,
-                status: 'completed'
+                status: "completed"
             },
             { new: true }
-        )
+        );
 
-        const year = new Date().getFullYear();
+        if (!payment) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Payment Not Found"
+            });
+        }
+
+
+
+
 
         let count = 1;
 
+        const year = new Date().getFullYear();
+
         const enrollment_no = `EKN-${year}-${count}`;
 
-        for (let item of payment.Pay_Cart) {
-            
+        console.log("enrollment_nonn", enrollment_no);
+
+
+
+
+        let courseData = [];
+
+        for (let v of payment.Pay_Cart) {
+
+            courseData.push({
+                course_id: v.course_id
+            });
+
             const enrollment = await Enrollment.create({
-                course_id: item.course_id,
+                course: courseData,
                 user_id: payment.userId,
                 payment_id: payment._id,
                 enrollment_no,
                 date: new Date()
             });
 
-            console.log("Enrollment Number :", enrollment_no);
+            count++;
 
             console.log("Enrollment Saved :", enrollment);
 
-            count++;
-
         }
 
+
+
+
+        // Success Response
         return res.status(200).json({
+            success: true,
             message: "Payment Successfully",
             orderId: razorpay_order_id,
             paymentId: razorpay_payment_id
-        })
+        });
+
     } catch (error) {
+
         console.log(error);
 
         return res.status(500).json({
-            message: "Payment verify failed"
+            success: false,
+            message: "Payment Verify Failed"
         });
     }
-}
+};
+
 
 module.exports = {
     deletePayment,

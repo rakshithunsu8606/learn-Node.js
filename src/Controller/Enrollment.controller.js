@@ -75,7 +75,7 @@ const upadateEnrollment = async (req, res) => {
 
         let upadte = { ...req.body }
         const enrollment = await Enrollment.findByIdAndUpdate(
-            req.params.id,
+            req.params.id,    
             upadte,
             { new: true }
         )

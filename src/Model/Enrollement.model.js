@@ -2,10 +2,14 @@ const { default: mongoose } = require("mongoose");
 
 const EnrollmentSchema = new mongoose.Schema(
     {
-        course_id: {
-            type: mongoose.Types.ObjectId,
-            ref: 'course'
-        },
+        course: [
+            {
+                course_id: {
+                    type: mongoose.Types.ObjectId,
+                    ref: 'course',
+                }
+            }
+        ],   
         user_id: {
             type: mongoose.Types.ObjectId,
             ref: 'user'
