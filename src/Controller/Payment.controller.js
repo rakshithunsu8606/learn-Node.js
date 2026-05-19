@@ -1,4 +1,5 @@
 const Instance = require("../Config/Razorpay");
+const Enrollment = require("../Model/Enrollement.model");
 const Payment = require("../Model/Payment.model");
 const crypto = require('crypto');
 
@@ -108,13 +109,16 @@ const CreateOrder = async (req, res) => {
 
         const Order = await Instance.orders.create(options);
 
+        const Enrollmenttt = "ENR" + Date.now()
+
         const payment = await Payment.create({
             orderId: Order.id,
             amount: Order.amount,
             status: 'pending',
             userId,
             Cart_id,
-            Pay_Cart
+            Pay_Cart,
+            Enrollmenttt
         })
 
         res.status(200).json({
@@ -156,8 +160,33 @@ const verifyPayment = async (req, res) => {
                 paymentId: razorpay_payment_id,
                 signature: razorpay_signature,
                 status: 'completed'
-            }
+            },
+            { new: true }
         )
+
+        const year = new Date().getFullYear();
+
+        let count = 1;
+
+        const enrollment_no = `EKN-${year}-${count}`;
+
+        for (let item of payment.Pay_Cart) {
+            
+            const enrollment = await Enrollment.create({
+                course_id: item.course_id,
+                user_id: payment.userId,
+                payment_id: payment._id,
+                enrollment_no,
+                date: new Date()
+            });
+
+            console.log("Enrollment Number :", enrollment_no);
+
+            console.log("Enrollment Saved :", enrollment);
+
+            count++;
+
+        }
 
         return res.status(200).json({
             message: "Payment Successfully",
@@ -165,7 +194,11 @@ const verifyPayment = async (req, res) => {
             paymentId: razorpay_payment_id
         })
     } catch (error) {
+        console.log(error);
 
+        return res.status(500).json({
+            message: "Payment verify failed"
+        });
     }
 }
 
