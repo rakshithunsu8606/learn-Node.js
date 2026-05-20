@@ -190,39 +190,34 @@ const verifyPayment = async (req, res) => {
 
 
 
-        let count = 1;
+        // let count = 0;
 
         const year = new Date().getFullYear();
-
-        const enrollment_no = `EKN-${year}-${count}`;
-
-        console.log("enrollment_nonn", enrollment_no);
-
-
-
 
         let courseData = [];
 
         for (let v of payment.Pay_Cart) {
-
             courseData.push({
                 course_id: v.course_id
             });
-
-            const enrollment = await Enrollment.create({
-                course: courseData,
-                user_id: payment.userId,
-                payment_id: payment._id,
-                enrollment_no,
-                date: new Date()
-            });
-
-            count++;
-
-            console.log("Enrollment Saved :", enrollment);
-
         }
 
+        const totalEnrollments = await Enrollment.countDocuments();
+
+        const nextNumber = totalEnrollments + 1;
+
+        const enrollment_no = `EKN-${year}-${nextNumber}`;
+
+        const enrollment = await Enrollment.create({
+            course: courseData,
+            user_id: payment.userId,
+            payment_id: payment._id,
+            enrollment_no,
+            date: new Date()
+        });
+
+        console.log("enrollment_no:", enrollment_no);
+        console.log("Enrollment Saved :", enrollment);
 
 
 
