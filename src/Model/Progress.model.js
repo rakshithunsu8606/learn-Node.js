@@ -11,7 +11,7 @@ const ProgressSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: 'content'
         },
-        content_time: {
+        duration: {
             type: Number
         },
         is_completed: {

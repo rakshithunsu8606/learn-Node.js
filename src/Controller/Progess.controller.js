@@ -36,7 +36,7 @@ const addProgress = async (req, res) => {
     try {
         const progress = await Progress.create(req.body)
 
-        console.log("progress",progress);
+        console.log("progressAdd",progress);
 
         if (!progress) {
             return res.status(400).json({ data: null, message: "Progress Not Difend" })
@@ -56,7 +56,7 @@ const deleteProgress = async (req, res) => {
 
         const progress = await Progress.findByIdAndDelete(req.params.id)
 
-        console.log(progress);
+        console.log("progressDELE",progress);
 
         if (!progress) {
             return res.status(400).json({ data: null, message: "Progress Not Delete" })
@@ -80,7 +80,7 @@ const upadateProgress = async (req, res) => {
             { new: true }
         )
 
-        console.log(progress);
+        console.log("progressUP",progress);
 
         if (!progress) {
             return res.status(400).json({ data: null, message: "Progress Not Upadte" })
