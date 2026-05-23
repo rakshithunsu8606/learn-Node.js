@@ -1,4 +1,4 @@
-const { types } = require("joi");
+// const { types } = require("joi");
 const { default: mongoose } = require("mongoose");
 
 const CertificateSchema = new mongoose.Schema(
@@ -7,6 +7,10 @@ const CertificateSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: 'enrollment'
         },
+        user_id: {
+            type: mongoose.Types.ObjectId,
+            ref: 'user'
+        },
         course_id: {
             type: mongoose.Types.ObjectId,
             ref: 'course'
@@ -14,8 +18,8 @@ const CertificateSchema = new mongoose.Schema(
         grade: {
             type: String
         },
-        percentage:{
-            type:Number
+        percentage: {
+            type: Number
         },
         date: {
             type: Date

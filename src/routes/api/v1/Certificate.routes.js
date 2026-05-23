@@ -15,4 +15,6 @@ router.put('/updateCertificate/:id', CertificateController.upadateCertificate)
 
 router.delete('/deleteCertificate/:id', CertificateController.deleteCertificate)
 
+router.post('/generate-certificate',CertificateController.genrateCertificate);
+
 module.exports = router
